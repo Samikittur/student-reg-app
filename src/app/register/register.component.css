@@ -1,0 +1,36 @@
+.update-student{
+    border:1px solid #ccc;
+    position: fixed;
+    bottom: 0px;
+    margin: auto;
+    left: 0px;
+    right: 0px;
+    width:1024px;
+    background: #fff;
+}
+.closeme{
+    font-weight: bold; 
+    position: absolute;
+    right:10px;
+    top: 10px;
+    cursor: pointer;
+}
+
+tr.highlighted td{
+    background: #ccc;
+    color: black;
+}
+.delete{
+    line-height: 18px;
+}
+.error{
+    color:red;
+}
+.reg-title{
+    margin-bottom: 0px;
+}
+.cross-line{
+    margin-top: 0px;
+}
+
+

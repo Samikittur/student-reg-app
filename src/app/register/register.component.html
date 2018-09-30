@@ -1,0 +1,116 @@
+<!-- Page Content -->
+<div class="container">
+  <div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <section class="testimonial py-5" id="testimonial">
+      <div class="container">
+        <div class="row ">
+          <div class="col-md-4 py-5 bg-primary text-white text-center ">
+            <div class=" ">
+              <div class="card-body">
+                <img src="http://www.ansonika.com/mavia/img/registration_bg.svg" style="width:30%">
+                <h2 class="py-3">Registration</h2>
+                <p>We required few of your more details to register examination seat. Please provide your correct details
+                  while filling the form.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8 py-5 border">
+            <h4 class="pb-4 reg-title">Please fill with your details</h4>
+            <hr class="cross-line">
+            <form class="form-horizontal" name="register"  role="form" (ngSubmit)="register(RegisterForm)" #RegisterForm="ngForm">
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                    <h6>Registeration Details</h6>
+                </div>
+                <div class="form-group col-md-6">
+                  <select id="inputState" name="examState" [(ngModel)]="stateModel" required="required" class="form-control" (change)="getCitiesList($event.target.value)">
+                    <option selected [value]="0">Select state</option>
+                    <option [value]="state.id" *ngFor="let state of statesList">{{state.name}}</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <select id="inputCity" name="examCity" [(ngModel)]="citiesModel" required="required" class="form-control" (change)="getExamsList()">
+                        <option selected [value]="0">Select City</option>
+                        <option [value]="cities.id" *ngFor="let cities of citiesList">{{cities.name}}</option>
+                      </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <select id="inputExam" name="exam" [(ngModel)]="examModel" required="required"   class="form-control">
+                        <option selected [value]="0">Attaining For</option>
+                        <option [value]="exam.id" *ngFor="let exam of examination">{{exam.type}}</option>
+                      </select>
+                </div>  
+              </div>
+              <div class="form-row">
+                  <div class="form-group col-md-12">
+                      <h6>Personal Details</h6>
+                  </div>
+                <div class=" from-group col-md-6">
+                    <input id="fatherName" name="fatherName" ngModel placeholder="Father Name" class="form-control" type="text">
+                </div>
+                <div class="form-group col-md-6">
+                  <input type="text" class="form-control" ngModel name="lastName" id="lastName" placeholder="Last Name">
+                </div>
+              </div>
+              <div class="form-row">
+                  <div class="form-group col-md-6">
+                      <input id="mobileNo" name="mobileNo" maxlength="10" ngModel placeholder="Mobile No." class="form-control" required="required" type="text">
+                    </div>
+                <div class="form-group col-md-6">
+                  <input id="city" name="city" placeholder="City" ngModel class="form-control" required="required" type="text">
+                </div>
+              </div>
+              <div class="form-row">
+                  <div class="form-group col-md-6">
+                      <input id="street" name="street" ngModel placeholder="Street" class="form-control" required="required" type="text">
+                    </div>
+                  <div class="form-group col-md-6">
+                      <input id="address" name="address" ngModel placeholder="Address" class="form-control" required="required" type="text">
+                    </div>
+              </div>
+              <div class="form-row">
+                  <div class="form-group col-md-6">
+                      <input id="zipcode" name="zipcode" ngModel placeholder="Zipcode" class="form-control" required="required" type="text">
+                    </div>
+              </div>
+              <!--<div class="form-group col-md-12">
+                <textarea id="comment" name="comment" cols="40" rows="5" class="form-control"></textarea>
+              </div>-->
+              <div class="form-row">
+                <div class="form-group">
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+                      <label class="form-check-label" for="invalidCheck2">
+                        <small>By clicking Submit, you agree to our Terms & Conditions, Visitor Agreement and Privacy Policy.</small>
+                      </label>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="form-row">
+                <button type="submit" [disabled]="!RegisterForm.form.valid" class="btn btn-danger">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <div class="overlay" *ngIf="loading">
+      <div class="load-bar">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+  </div>
+</div>
+
+<!-- /.container -->

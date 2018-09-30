@@ -1,0 +1,171 @@
+http://lab.iamrohit.in/php_ajax_country_state_city_dropdown/
+
+{
+"cities":[
+{
+      "id": "41396",
+      "name": "Cleveland",
+      "state_id": "3805"
+    },
+    {
+      "id": "41397",
+      "name": "Gilberdyke",
+      "state_id": "3805"
+    },
+    {
+      "id": "41398",
+      "name": "Llanrwst",
+      "state_id": "3805"
+    },
+    {
+      "id": "41399",
+      "name": "Swadlincote",
+      "state_id": "3805"
+    },
+    {
+      "id": "41400",
+      "name": "Turriff",
+      "state_id": "3805"
+    },
+	{
+      "id": "41401",
+      "name": "Westhill",
+      "state_id": "3806"
+    },
+    {
+      "id": "41402",
+      "name": "Oban",
+      "state_id": "3807"
+    },
+    {
+      "id": "41403",
+      "name": "Craigavon",
+      "state_id": "3808"
+    },
+    {
+      "id": "41404",
+      "name": "Barton-le-Clay",
+      "state_id": "3809"
+    },
+    {
+      "id": "41405",
+      "name": "Bedford",
+      "state_id": "3809"
+    },
+    {
+      "id": "41406",
+      "name": "Biggleswade",
+      "state_id": "3809"
+    },
+    {
+      "id": "41407",
+      "name": "Caddington",
+      "state_id": "3809"
+    },
+    {
+      "id": "41408",
+      "name": "Flitton",
+      "state_id": "3809"
+    },
+    {
+      "id": "41409",
+      "name": "Flitwick",
+      "state_id": "3809"
+    },
+    {
+      "id": "41410",
+      "name": "Leighton Buzzard",
+      "state_id": "3809"
+    },
+    {
+      "id": "41411",
+      "name": "Marston Moretaine",
+      "state_id": "3809"
+    },
+    {
+      "id": "41412",
+      "name": "Sandy",
+      "state_id": "3809"
+    },
+    {
+      "id": "41413",
+      "name": "Westoning",
+      "state_id": "3809"
+    },
+    {
+      "id": "41414",
+      "name": "Dundonald",
+      "state_id": "3810"
+    },
+    {
+      "id": "41415",
+      "name": "Holywood",
+      "state_id": "3810"
+    },
+    {
+      "id": "41416",
+      "name": "Berkshire",
+      "state_id": "3811"
+    },
+    {
+      "id": "41417",
+      "name": "Bracknell",
+      "state_id": "3811"
+    },
+    {
+      "id": "41418",
+      "name": "Littlewick Green",
+      "state_id": "3811"
+    },
+    {
+      "id": "41419",
+      "name": "Maidenhead",
+      "state_id": "3811"
+    },
+    {
+      "id": "41420",
+      "name": "Newbury",
+      "state_id": "3811"
+    },
+    {
+      "id": "41421",
+      "name": "Reading",
+      "state_id": "3811"
+    },
+    {
+      "id": "41422",
+      "name": "Sandhurst",
+      "state_id": "3811"
+    },
+    {
+      "id": "41423",
+      "name": "Slough",
+      "state_id": "3811"
+    },
+    {
+      "id": "41424",
+      "name": "Sunninghill",
+      "state_id": "3811"
+    },
+    {
+      "id": "41425",
+      "name": "Twyford",
+      "state_id": "3811"
+    },
+    {
+      "id": "41426",
+      "name": "Windsor",
+      "state_id": "3811"
+    },
+    {
+      "id": "41427",
+      "name": "Wokingham",
+      "state_id": "3811"
+    },
+    {
+      "id": "41428",
+      "name": "Woodley",
+      "state_id": "3811"
+    }
+]
+}

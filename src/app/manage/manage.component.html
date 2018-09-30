@@ -1,0 +1,96 @@
+<div class="container">
+    <h3>
+    </h3>
+    <div class="row">
+        <div class="col-md-3">
+            <form class="form-horizontal"  role="form" (ngSubmit)="setConfig(ConfigForm)" #ConfigForm="ngForm">
+                <div class="row">
+                    <div class="load-bar" *ngIf="logging">
+                      <div class="bar"></div>
+                      <div class="bar"></div>
+                      <div class="bar"></div>
+                    </div>
+                    <hr *ngIf="!logging">
+                  </div>
+                  <div class="form-row">
+                      <div class="form-group col-md-12">
+                          <h4>Add Exam Config</h4>
+                      </div>
+                     </div> 
+                      <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <select id="inputState" name="state" [(ngModel)]="stateModel" class="form-control" (change)="getCitiesList($event.target.value)">
+                          <option selected [value]="0">Select state</option>
+                          <option [value]="state.id" *ngFor="let state of statesList">{{state.name}}</option>
+                        </select>
+                      </div>
+                      </div>
+                      <div class="form-row">
+                      <div class="form-group col-md-12">
+                          <select id="inputState" name="city" [(ngModel)]="citiesModel" class="form-control" (change)="getExamsList()">
+                              <option selected [value]="0">Select City</option>
+                              <option [value]="cities.id" *ngFor="let cities of citiesList">{{cities.name}}</option>
+                            </select>
+                      </div>
+                      </div>
+                      <div class="form-row"> 
+                      <div class="form-group col-md-12">
+                          <select id="inputState" name="exam" [(ngModel)]="examModel" class="form-control">
+                              <option selected [value]="0">Attaining For</option>
+                              <option [value]="exam.id" *ngFor="let exam of examination">{{exam.type}}</option>
+                            </select>
+                      </div>  
+                    </div>
+                    <div class="form-row"> 
+                        <div class="form-group col-md-12">
+                            <input type="text" maxlength="2" ngModel name="seatlimit" value="" class="form-control" placeholder="Seat limit" id="seatlimit">
+                        </div>  
+                      </div>
+                      <div class="form-row"> 
+                          <div class="form-group col-md-12">
+                      <button type="submit" class="btn btn-success">
+                          <i class="fa fa-sign-in"></i> Submit</button>
+                      </div>
+                    </div>    
+            </form>
+        </div>
+        <div class="col-md-9">
+            <h3 class="mt-5">Exam Configuration</h3>
+<table class="table table-dark table-striped" border="0">
+    <thead>
+        <tr>
+            <th>State Code</th>
+            <th>City Code</th>
+            <th>Exam Code</th>
+            <th>Seat Limit</th>
+            <th>Remaining Seats</th>
+            <th class="align-center">X</th>
+          </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor = "let examConfig of examConfigList" data-id="{{examConfig._id}}" [class.highlighted]="examConfig._id === currentName">
+      <td>{{examConfig.stateid}}</td>
+      <td>{{examConfig.cityid}}</td>
+      <td>{{examConfig.examcode}}</td>
+      <td>{{examConfig.seatlimit}}</td>
+      <td>{{examConfig.remaining}}</td>
+      <td width="100" class="align-center">
+         <button type="button" class="btn btn-danger delete" (click)="deleteExamConfig(examConfig._id)"><i class="fa fa-trash" style="font-size: 18px;"></i></button>
+      </td>
+    </tr>  
+    <tr *ngIf="examConfigList?.length < 1">
+      <td align="center" colspan="6">
+        No configuration exam is available till the date.
+      </td>
+    </tr>
+    </tbody>
+  </table>
+    </div>
+</div>
+<div class="overlay" *ngIf="loading">
+    <div class="load-bar">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+</div>

@@ -1,0 +1,11 @@
+<div>
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <hr>
+    <mat-dialog-content>
+        {{data.message}}
+    </mat-dialog-content>
+    <hr>
+    <mat-dialog-actions>
+      <button mat-raised-button (click)="onCloseCancel()" color="primary" class="mat-raised-button mat-primary">OK</button>
+    </mat-dialog-actions>
+  </div>

@@ -1,0 +1,105 @@
+<!-- Page Content -->
+<div class="container sign-up">
+  <form class="form-horizontal"  role="form" (ngSubmit)="signUp(SignupForm)" #SignupForm="ngForm">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <h2>Sign Up</h2>
+        <div class="load-bar" *ngIf="logging">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <hr *ngIf="!logging">
+      </div>
+    </div>
+    <div class="row error-margin-bottom" *ngIf="errorFlag">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <div class="form-control-feedback">
+          <span class="align-middle text-danger" [class.success]="success">
+            <i class="fa fa-close" *ngIf="!success"></i>
+            <i class="fa fa-check-circle success" *ngIf="success"></i> {{" "+message}}
+          </span>
+        </div>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <div class="form-group has-danger">
+          <label class="sr-only" for="name">E-Mail Address</label>
+          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <div class="input-group-addon" style="width: 2.6rem">
+              <i class="fa fa-user-circle-o"></i>
+            </div>
+            <input type="text" ngModel name="name" [(ngModel)]="user.name" class="form-control" id="name" placeholder="Full Name" required autofocus>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <div class="form-group has-danger">
+          <label class="sr-only" for="email">E-Mail Address</label>
+          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <div class="input-group-addon" style="width: 2.6rem">
+              <i class="fa fa-user-circle-o"></i>
+            </div>
+            <input type="text" ngModel name="email" [(ngModel)]="user.email" class="form-control" id="email" placeholder="you@example.com" required autofocus>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="sr-only" for="password">Password</label>
+          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <div class="input-group-addon" style="width: 2.6rem">
+              <i class="fa fa-key"></i>
+            </div>
+            <input type="password" ngModel name="password" [(ngModel)]="user.password" class="form-control" id="password" placeholder="Password" required>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="sr-only" for="repeatPassword">Password</label>
+          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <div class="input-group-addon" style="width: 2.6rem">
+              <i class="fa fa-key"></i>
+            </div>
+            <input type="password" ngModel name="cpassword" [(ngModel)]="user.cpassword" class="form-control" id="cpassword" placeholder="Repeat Password" required>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-control-feedback">
+          <span class="text-danger align-middle">
+            <!-- Put password error message here -->
+          </span>
+          <input type="hidden" ngModel name="user" value="admin" class="form-control" id="type">
+        </div>
+      </div>
+    </div>
+    <div class="row" style="padding-top: 1rem">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <button type="submit" [disabled]="!SignupForm.form.valid" class="btn btn-success">
+          <i class="fa fa-sign-in"></i> Sign Up</button>
+          <a class="btn btn-link" routerLink="/signin">Click Here</a>to go back to Sign In
+      </div>
+     <!--  <button type="button" (click)="sendData()" class="btn btn-success">Notify</button> -->
+    </div>
+  </form>
+</div>
+<!-- /.container -->  
