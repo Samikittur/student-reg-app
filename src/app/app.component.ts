@@ -16,7 +16,7 @@ export class AppComponent implements OnInit{
   signed:any;
   serviceData:any;
   userEmail:any;
-  checkUserType :any;
+  checkAdminUser :any;
   constructor(public router: Router, private AuthServices:AuthServices, private dataService: DataService) {
     if(this.AuthServices.authFlag()){
       this.loggedIn = true; 
@@ -32,6 +32,7 @@ export class AppComponent implements OnInit{
     this.loggedIn = this.serviceData.loggedin;
     this.userType = this.serviceData.userType;
     this.userEmail = this.serviceData.username;
+    this.checkAdminUser = this.serviceData.userType =='admin'? true : false;
   });       
   }
   
