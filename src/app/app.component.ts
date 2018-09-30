@@ -16,6 +16,7 @@ export class AppComponent implements OnInit{
   signed:any;
   serviceData:any;
   userEmail:any;
+  checkUserType :any;
   constructor(public router: Router, private AuthServices:AuthServices, private dataService: DataService) {
     if(this.AuthServices.authFlag()){
       this.loggedIn = true; 
