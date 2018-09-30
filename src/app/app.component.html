@@ -10,7 +10,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto" *ngIf="loggedIn && userType=='admin'">
+      <ul class="navbar-nav ml-auto" *ngIf="loggedIn && checkAdminUser">
         <li class="nav-item">
             <a class="nav-link" routerLink="manage">Manage Exam Configuration</a>
         </li>
