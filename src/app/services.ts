@@ -4,7 +4,8 @@ import { map } from "rxjs/operators";
 
 @Injectable()
 export class Services {
-    domainPort = 'http://localhost:4003/api/';
+    //domainPort = 'http://localhost:4003/api/';
+    domainPort = 'https://exam-reg.herokuapp.com/api/'; 
     public httpOptions = {
             headers: new HttpHeaders({ 'authorization':'Bearer '+localStorage.getItem('jwtToken') }),
            };
