@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Services } from '../services';
-import { MatDialog } from '@angular/material'
+import { MatDialog } from '@angular/material';
 import { NgForm } from '@angular/forms';
 import { AuthServices } from '../auth.service';
-import { MatDialogComponent } from '../mat-dialog/mat-dialog.component'
+import { MatDialogComponent } from '../mat-dialog/mat-dialog.component';
 @Component({
   selector: 'app-manage',
   templateUrl: './manage.component.html',
@@ -113,6 +113,8 @@ export class ManageComponent implements OnInit {
       console.log('The dialog was closed'+result);
       if(result == 'Confirm'){
         this.Services.deleteExamConfig(id).subscribe(deletedConfig=>{
+          var modelData = {title:"SUCCESS",message:"Configuration Deleted Successfully", modelType:"default"};
+          this.openDialog(modelData,"");
           this.getConfig();
         });
       }
