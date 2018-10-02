@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Services } from '../services';
+import { MatDialog } from '@angular/material'
 import { NgForm } from '@angular/forms';
 import { AuthServices } from '../auth.service';
+import { MatDialogComponent } from '../mat-dialog/mat-dialog.component'
 @Component({
   selector: 'app-manage',
   templateUrl: './manage.component.html',
@@ -20,7 +22,12 @@ export class ManageComponent implements OnInit {
   examModel = 0;
   examConfig:any;
   loading = true;
-  constructor(private AuthServices:AuthServices,public Services:Services, private router : Router, private route:ActivatedRoute) {
+  message ="";
+  constructor(private AuthServices:AuthServices,
+              public Services:Services, 
+              private router : Router, 
+              private route:ActivatedRoute, 
+              private dialog: MatDialog ) {
     this.AuthServices.userAuth('manage');
   }
 
@@ -57,6 +64,7 @@ export class ManageComponent implements OnInit {
   } 
   setConfig(form: NgForm){
     this.loading = true;
+    var modelData = {title:"",message:"",modelType:"default"};
     const exam = {
       stateid:form.value.state,
       cityid:form.value.city,
@@ -68,6 +76,16 @@ export class ManageComponent implements OnInit {
       this.examConfig = config;
       this.getConfig();
       this.loading = false;
+      
+      if(this.examConfig.code == 11000){
+        modelData.title = "ALERT";
+        modelData.message = "Exam configuration already created.";
+      }else{
+        modelData.title = "SUCCESS";
+        modelData.message = "Exam configuration created.";
+      }
+
+      this.openDialog(modelData,"");
     });
   }
 
@@ -79,8 +97,25 @@ export class ManageComponent implements OnInit {
   }
 
   deleteExamConfig(id){
-    this.Services.deleteExamConfig(id).subscribe(deletedConfig=>{
-      this.getConfig();
+    var modelData = {title:"CONFIRM",message:"Are you sure want to delete?", modelType:"confirm"};
+    this.openDialog(modelData,id);
+  }
+
+  openDialog(content,id){
+    var self = this;
+    const dialogRef = this.dialog.open(MatDialogComponent, {
+      height: '250px',
+      width: '300px',
+      data: content
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed'+result);
+      if(result == 'Confirm'){
+        this.Services.deleteExamConfig(id).subscribe(deletedConfig=>{
+          this.getConfig();
+        });
+      }
     });
   }
 

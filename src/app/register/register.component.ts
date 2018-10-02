@@ -75,7 +75,7 @@ constructor(private AuthServices:AuthServices,
       address:form.value.address,
       zipcode:form.value.zipcode
     }
-    var modelData = {title:"",message:""};
+    var modelData = {title:"",message:"",modelType:"default"};
     this.Services.registerExam(regDetails).subscribe(resObj=>{
       const stringifyData = JSON.stringify(resObj);
       const parseData = JSON.parse(stringifyData);

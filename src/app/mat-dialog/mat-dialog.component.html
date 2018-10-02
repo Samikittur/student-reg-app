@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="data.modelType=='default'">
     <h2 mat-dialog-title>{{data.title}}</h2>
     <hr>
     <mat-dialog-content>
@@ -9,3 +9,16 @@
       <button mat-raised-button (click)="onCloseCancel()" color="primary" class="mat-raised-button mat-primary">OK</button>
     </mat-dialog-actions>
   </div>
+
+  <div *ngIf="data.modelType=='confirm'">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <hr>
+    <mat-dialog-content>
+        {{data.message}}
+    </mat-dialog-content>
+    <hr>
+    <mat-dialog-actions>
+      <button mat-raised-button (click)="onCloseConfirm()" color="primary" class="mat-raised-button mat-primary">Delete</button>
+      <button mat-raised-button (click)="onCloseCancel()" color="primary" class="mat-raised-button mat-primary">Cancel</button>
+    </mat-dialog-actions>
+  </div>  
