@@ -1,4 +1,6 @@
 .nav-link.username{
     color: yellow;
 }
-
+.hide{
+    display:none;
+}

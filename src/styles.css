@@ -118,3 +118,19 @@
     33.3333% {left: 0; width: 100%;z-index: 10;}
     to {left: 0; width: 100%;}
 }
+
+@media screen and (max-width: 640px) {
+  .sign-in .form-horizontal{
+      margin: 20px 0px !important;
+  }
+  .sign-up .form-horizontal{
+    margin: 20px 0px !important;
+  }
+  .overflow {
+    overflow: auto !important;
+  }
+  .loggedout .navbar-collapse{
+    flex-basis: 0 !important;
+    flex-grow: 0 !important;
+  }
+}

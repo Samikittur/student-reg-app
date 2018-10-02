@@ -17,6 +17,7 @@ export class AppComponent implements OnInit{
   serviceData:any;
   userEmail:any;
   checkAdminUser :any;
+  navbarOpen = false;
   constructor(public router: Router, private AuthServices:AuthServices, private dataService: DataService) {
     if(this.AuthServices.authFlag()){
       this.loggedIn = true; 
@@ -43,5 +44,8 @@ export class AppComponent implements OnInit{
     this.dataService.sendDataObj({type:"signin",loggedin:false});
     localStorage.clear();
     this.router.navigate(['/signin']);
+  }
+  toggleNavbar() {
+    this.navbarOpen = !this.navbarOpen;
   }
 }
