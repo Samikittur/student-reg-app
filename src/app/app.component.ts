@@ -34,6 +34,7 @@ export class AppComponent implements OnInit{
     this.userType = this.serviceData.userType;
     this.userEmail = this.serviceData.username;
     this.checkAdminUser = this.serviceData.userType =='admin'? true : false;
+    this.navbarOpen = false;
   });       
   }
   

@@ -1,58 +1,63 @@
 <div class="container overflow">
-    <h2 class="mt-5">Users</h2>
-<table class="table table-dark table-striped" border="0">
-    <thead>
-        <tr>
-            <th>Admin Name</th>
-            <th>Admin Email</th>
-            <th>User Type</th>
-          </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor = "let adminUser of adminList" data-id="{{adminUser._id}}" [class.highlighted]="adminUser._id === currentName">
-      <td>{{adminUser.name}}</td>
-      <td>{{adminUser.email}}</td>
-      <td>{{adminUser.type}}</td>
-    </tr>  
-    <tr *ngIf="adminList?.length < 1">
-        <td align="center" colspan="4">
-          No entry is available till the date.
-        </td>
-      </tr> 
-    </tbody>
-  </table>
-
-  <table class="table table-dark table-striped" border="0">
+  <h2 class="mt-5">Users</h2>
+  <div class="col-md-12">
+    <table class="table table-dark table-striped" border="0">
       <thead>
-          <tr>
-              <th>User Name</th>
-              <th>User Email</th>
-              <th>User Type</th>
-              <th class="align-center">X</th>
-            </tr>
+        <tr>
+          <th>Admin Name</th>
+          <th>Admin Email</th>
+          <th>User Type</th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor = "let user of usersList; let i of index" data-id="{{user._id}}" [class.highlighted]="user._id === currentName">
-        <td>{{user.name}}</td>
-        <td>{{user.email}}</td>
-        <td>{{user.type}}</td>
-        
-        <td width="100" class="align-center">
-           <button type="button" class="btn btn-danger delete" (click)="deleteUser(user._id,i)"><i class="fa fa-trash" style="font-size: 18px;"></i></button>
-        </td>
-      </tr> 
-      <tr *ngIf="usersList?.length < 1">
+        <tr *ngFor="let adminUser of adminList" data-id="{{adminUser._id}}" [class.highlighted]="adminUser._id === currentName">
+          <td>{{adminUser.name}}</td>
+          <td>{{adminUser.email}}</td>
+          <td>{{adminUser.type}}</td>
+        </tr>
+        <tr *ngIf="adminList?.length < 1">
           <td align="center" colspan="4">
             No entry is available till the date.
           </td>
-        </tr> 
+        </tr>
       </tbody>
     </table>
   </div>
-  <div class="overlay" *ngIf="loading">
-    <div class="load-bar">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-      </div>
+  <div class="col-md-12 overflow">
+    <table class="table table-dark table-striped" border="0">
+      <thead>
+        <tr>
+          <th>User Name</th>
+          <th>User Email</th>
+          <th>User Type</th>
+          <th class="align-center">X</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of usersList; let i of index" data-id="{{user._id}}" [class.highlighted]="user._id === currentName">
+          <td>{{user.name}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.type}}</td>
+
+          <td width="100" class="align-center">
+            <button type="button" class="btn btn-danger delete" (click)="deleteUser(user._id,i)">
+              <i class="fa fa-trash" style="font-size: 18px;"></i>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="usersList?.length < 1">
+          <td align="center" colspan="4">
+            No entry is available till the date.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="overlay" *ngIf="loading">
+  <div class="load-bar">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
 </div>

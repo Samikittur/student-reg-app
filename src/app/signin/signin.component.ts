@@ -63,6 +63,9 @@ export class SigninComponent implements OnInit {
       const errMsg = err.error;
       this.errorFlag = true;
       this.message = errMsg.msg;
+      if(errMsg.msg == undefined){
+        this.message ="Server Error. Please login after some time"
+      }
       this.logging = false;
     });
    }
