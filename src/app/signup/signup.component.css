@@ -43,3 +43,7 @@
       to {left: 0; width: 100%;}
   }
   .success{ color: green !important;}
+  .text-xs-center{
+    text-align: center;
+  }
+  .jumbotron{ margin-top: 60px;}
