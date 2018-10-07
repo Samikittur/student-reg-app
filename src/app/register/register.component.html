@@ -27,19 +27,19 @@
                     <h6>Registeration Details</h6>
                 </div>
                 <div class="form-group col-md-6">
-                  <select id="inputState" name="examState" [(ngModel)]="stateModel" required="required" class="form-control" (change)="getCitiesList($event.target.value)">
+                  <select id="inputState" name="examState" [(ngModel)]="stateModel" required class="form-control" (change)="getCitiesList($event.target.value)">
                     <option selected [value]="0">Select state</option>
                     <option [value]="state.id" *ngFor="let state of statesList">{{state.name}}</option>
                   </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <select id="inputCity" name="examCity" [(ngModel)]="citiesModel" required="required" class="form-control" (change)="getExamsList()">
+                    <select id="inputCity" name="examCity" [(ngModel)]="citiesModel" required class="form-control" (change)="getExamsList()">
                         <option selected [value]="0">Select City</option>
                         <option [value]="cities.id" *ngFor="let cities of citiesList">{{cities.name}}</option>
                       </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <select id="inputExam" name="exam" [(ngModel)]="examModel" required="required"   class="form-control">
+                    <select id="inputExam" name="exam" [(ngModel)]="examModel" required class="form-control">
                         <option selected [value]="0">Attaining For</option>
                         <option [value]="exam.id" *ngFor="let exam of examination">{{exam.type}}</option>
                       </select>
