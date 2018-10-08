@@ -44,3 +44,5 @@ Thumbs.db
 
 /*.env
 /server.js
+/server.js
+/.env
