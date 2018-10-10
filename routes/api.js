@@ -224,8 +224,8 @@ function registerExam(examModel, result, res) {
             res.json(err);
         } else {
             if (result != null) {
-                const reduceCount = result.remaining - 1;
-                updateConfigCollection(examConfigModel, reduceCount, result, res);
+                const remCount = result.remaining - 1;
+                updateConfigCollection(examConfigModel, remCount, result, res);
             } else {
                 return res.json({ reg: 'success', errorCode: "" });
             }
@@ -260,9 +260,9 @@ function checkDuplicate(examRegisterModel, res, result, req, examModel) {
         console.log('Service Failed');
     });
 }
-function updateConfigCollection(examConfigModel, reduceCount, result, res) {
+function updateConfigCollection(examConfigModel, remCount, result, res) {
     examConfigModel.findByIdAndUpdate(result._id, {
-        $set: { remaining: reduceCount }
+        $set: { remaining: remCount }
     },
         {
             new: true
@@ -296,11 +296,24 @@ router.get('/exam/requests', verifyToken, function (req, res) {
 });
 //Delete exam request
 router.delete('/requests/delete/:id', function (req, res) {
-    examRegisterModel.findByIdAndRemove(req.params.id, function (err, deletedRequest) {
+    examRegisterModel.findById({ _id: req.params.id }, function (err, result) {
         if (err) {
             console.log(err);
         } else {
-            res.json(deletedRequest);
+            examConfigModel.findOne({ examcode: result.exam_code }, function (err, exanConfig) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    const remCount = exanConfig.remaining + 1;
+                    examRegisterModel.findByIdAndRemove(req.params.id, function (err, deletedRequest) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            updateConfigCollection(examConfigModel, remCount, exanConfig, res);
+                        }
+                    });
+                }
+            });
         }
     });
 });

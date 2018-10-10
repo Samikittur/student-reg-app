@@ -47,10 +47,12 @@ export class RequestsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed'+result);
       if(result == 'Confirm'){
+        this.loading = true;
         this.Services.deleteRequests(id).subscribe(result=>{
         var modelData = {title:"SUCCESS",message:"Request Deleted Successfully", modelType:"default"};
         this.openDialog(modelData,"");  
         this.getRequestDetails();
+        this.loading = false;
     });
       }
     });
