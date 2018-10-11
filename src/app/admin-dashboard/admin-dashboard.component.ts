@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthServices} from '../auth.service';
 import { Services } from '../services';
+import { MatDialog } from '@angular/material';
+import { MatDialogComponent } from '../mat-dialog/mat-dialog.component';
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
@@ -10,7 +12,7 @@ export class AdminDashboardComponent implements OnInit {
   usersList=[];
   adminList=[];
   loading = true;
-  constructor(private AuthServices: AuthServices, private Services : Services) {
+  constructor(private AuthServices: AuthServices, private Services : Services,private dialog: MatDialog) {
     this.AuthServices.userAuth('admindash');
     this.AuthServices.routerUrl();
    }
@@ -38,11 +40,27 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  deleteUser(id,index){
-     this.Services.deleteUser(id).subscribe(getList =>{
-      //this.usersList.splice(index,1);
-      this.getUsersList();
-     });
+  deleteUser(id){
+    var modelData = {title:"CONFIRM",message:"Are you sure want to delete?", modelType:"confirm"};
+    this.openDialog(modelData,id);
    }
-  
+   openDialog(content,id){
+    var self = this;
+    const dialogRef = this.dialog.open(MatDialogComponent, {
+      height: '250px',
+      width: '300px',
+      data: content
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed'+result);
+      if(result == 'Confirm'){
+        this.Services.deleteUser(id).subscribe(deletedConfig=>{
+          var modelData = {title:"SUCCESS",message:"User Deleted Successfully", modelType:"default"};
+          this.openDialog(modelData,"");
+          this.getUsersList();
+        });
+      }
+    });
+  }
 }

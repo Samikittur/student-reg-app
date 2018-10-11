@@ -16,6 +16,8 @@ export class AppComponent implements OnInit{
   signed:any;
   serviceData:any;
   userEmail:any;
+  checkAdminUser :any;
+  navbarOpen = false;
   constructor(public router: Router, private AuthServices:AuthServices, private dataService: DataService) {
     if(this.AuthServices.authFlag()){
       this.loggedIn = true; 
@@ -31,6 +33,8 @@ export class AppComponent implements OnInit{
     this.loggedIn = this.serviceData.loggedin;
     this.userType = this.serviceData.userType;
     this.userEmail = this.serviceData.username;
+    this.checkAdminUser = this.serviceData.userType =='admin'? true : false;
+    this.navbarOpen = false;
   });       
   }
   
@@ -41,5 +45,8 @@ export class AppComponent implements OnInit{
     this.dataService.sendDataObj({type:"signin",loggedin:false});
     localStorage.clear();
     this.router.navigate(['/signin']);
+  }
+  toggleNavbar() {
+    this.navbarOpen = !this.navbarOpen;
   }
 }

@@ -1,6 +1,6 @@
 <!-- Page Content -->
 <div class="container sign-up">
-  <form class="form-horizontal"  role="form" (ngSubmit)="signUp(SignupForm)" #SignupForm="ngForm">
+  <form class="form-horizontal"  role="form" (ngSubmit)="signUp(SignupForm)" #SignupForm="ngForm" *ngIf="!success">
     <div class="row">
       <div class="col-md-3"></div>
       <div class="col-md-6">
@@ -17,9 +17,9 @@
       <div class="col-md-3"></div>
       <div class="col-md-6">
         <div class="form-control-feedback">
-          <span class="align-middle text-danger" [class.success]="success">
-            <i class="fa fa-close" *ngIf="!success"></i>
-            <i class="fa fa-check-circle success" *ngIf="success"></i> {{" "+message}}
+          <span class="align-middle text-danger">
+            <i class="fa fa-close"></i>
+            {{" "+message}}
           </span>
         </div>
       </div>
@@ -101,5 +101,17 @@
      <!--  <button type="button" (click)="sendData()" class="btn btn-success">Notify</button> -->
     </div>
   </form>
+    <div class="jumbotron text-xs-center" *ngIf="success">
+      <h1 class="display-3">Thank You!</h1>
+      <p class="lead"><strong>You have successfully signed up.</strong> Please login with your credentails.</p>
+      <!--<p class="lead"><strong>Please check your email</strong> for further instructions on how to complete your account setup.</p>-->
+      <hr>
+      <p class="lead">
+        <a class="btn btn-primary btn-sm" routerLink="/signin" role="button">Continue to homepage</a>
+      </p>
+      <p>
+        Having trouble? <a href="">Contact us</a>
+      </p>
+    </div>
 </div>
 <!-- /.container -->  

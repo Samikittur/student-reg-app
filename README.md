@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # StudentRegApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
@@ -29,4 +28,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 =======
 # student-exam-reg
 This just a Prototype app
->>>>>>> 2dd063a72fa6dca01be11e47fecaed1aaea98377
+2dd063a72fa6dca01be11e47fecaed1aaea98377
