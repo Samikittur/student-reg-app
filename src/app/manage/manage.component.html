@@ -69,7 +69,7 @@
       <td>{{examConfig.seatlimit}}</td>
       <td>{{examConfig.remaining}}</td>
       <td width="100" class="align-center">
-         <button type="button" class="btn btn-danger delete" (click)="deleteExamConfig(examConfig._id)"><i class="fa fa-trash" style="font-size: 18px;"></i></button>
+         <button type="button" class="btn btn-danger delete" [disabled] ="examConfig.deleteme" (click)="deleteExamConfig(examConfig._id)"><i class="fa fa-trash" style="font-size: 18px;"></i></button>
       </td>
     </tr>  
     <tr *ngIf="examConfigList?.length < 1">

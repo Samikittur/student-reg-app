@@ -23,6 +23,7 @@ export class ManageComponent implements OnInit {
   examConfig:any;
   loading = true;
   message ="";
+  restrictExam={};
   constructor(private AuthServices:AuthServices,
               public Services:Services, 
               private router : Router, 
@@ -33,7 +34,7 @@ export class ManageComponent implements OnInit {
 
   ngOnInit() {
     this.getStatesList();
-    this.getConfig();
+    this.getExamConfig();
   }
   getStatesList(){
     this.Services.getStates().subscribe(getList =>{
@@ -74,7 +75,7 @@ export class ManageComponent implements OnInit {
     }
     this.Services.setExamConfig(exam).subscribe(config=>{
       this.examConfig = config;
-      this.getConfig();
+      this.getExamConfig();
       this.loading = false;
       
       if(this.examConfig.code == 11000){
@@ -91,11 +92,30 @@ export class ManageComponent implements OnInit {
 
   getConfig(){
     this.Services.getExamConfig().subscribe(config=>{
-      this.examConfigList = config;
+      const stringifyData = JSON.stringify(this.restrictExam);
+      const parseData = JSON.parse(stringifyData);
+      const stringifyconfig = JSON.stringify(config);
+      const parseConfigData = JSON.parse(stringifyconfig);
+      parseConfigData.map(configelm => {
+        configelm.deleteme = false;
+         parseData.map(elm => {
+          if(configelm.examcode == elm){
+            configelm.deleteme = true;
+            return;
+          }
+        });
+      });
+      this.examConfigList = parseConfigData;
       this.loading = false;
     });
   }
-
+  getExamConfig(){
+    this.Services.getExamConfigRestrict().subscribe(configList=>{
+      this.restrictExam = configList;
+      this.getConfig();
+      this.loading = false;
+    });
+  }
   deleteExamConfig(id){
     var modelData = {title:"CONFIRM",message:"Are you sure want to delete?", modelType:"confirm"};
     this.openDialog(modelData,id);
@@ -115,7 +135,7 @@ export class ManageComponent implements OnInit {
         this.Services.deleteExamConfig(id).subscribe(deletedConfig=>{
           var modelData = {title:"SUCCESS",message:"Configuration Deleted Successfully", modelType:"default"};
           this.openDialog(modelData,"");
-          this.getConfig();
+          this.getExamConfig();
         });
       }
     });

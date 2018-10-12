@@ -276,6 +276,31 @@ function updateConfigCollection(examConfigModel, remCount, result, res) {
             }
         });
 }
+//Get Exam request to disable config
+router.get('/examConfig/restrict', verifyToken, function (req, res) {
+    jwt.verify(req.token, db.secret, function (err, authData) {
+        if (err) {
+            return res.status(403).send({ success: false, msg: 'Unauthorized.' });
+        } else {
+            examRegisterModel.find({}).exec(function (err, result) {
+                if (err) {
+                    console.log(err);
+                    res.json(err);
+                } else {
+                    const getexamCode = []
+                    result.map(reqItem => {
+                        getexamCode.push(reqItem.exam_code);
+                    });
+                    let unique_array = getexamCode.filter(function(elem, index, self) {
+                        return index == self.indexOf(elem);
+                    });
+                    res.json(unique_array);
+                }
+            });
+        }
+    });
+
+});
 //Get Exam request
 router.get('/exam/requests', verifyToken, function (req, res) {
     jwt.verify(req.token, db.secret, function (err, authData) {

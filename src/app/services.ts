@@ -94,6 +94,12 @@ export class Services {
             }));
     }
 
+    getExamConfigRestrict() {
+        return this.http.get(this.APIEndpoint+'examConfig/restrict',this.httpOptions)
+            .pipe(map(res => {
+                return res;
+            }));
+    }
     getRequests() {
         return this.http.get(this.APIEndpoint+'exam/requests',this.httpOptions)
             .pipe(map(res => {
