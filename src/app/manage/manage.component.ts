@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 import { NgForm } from '@angular/forms';
 import { AuthServices } from '../auth.service';
 import { MatDialogComponent } from '../mat-dialog/mat-dialog.component';
+// https://stackblitz.com/angular/oojygndaamg?file=main.ts
 @Component({
   selector: 'app-manage',
   templateUrl: './manage.component.html',

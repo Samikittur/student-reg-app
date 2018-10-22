@@ -45,6 +45,22 @@ const regrequests = mongoose.Schema({
     zipcode:{
         type: Number,
         required:true
+    },
+    status:{
+        type: String,
+        required:true
+    },
+    regdate:{
+        type: String,
+        required:true
+    },
+    examdate:{
+        type: String,
+        required:true
+    },
+    totalscore:{
+        type: String,
+        required:true
     }},
     {collection:"regrequests"});
     

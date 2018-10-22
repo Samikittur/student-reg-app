@@ -94,6 +94,13 @@ export class Services {
             }));
     }
 
+    updateRequest(reqObj) {
+        return this.http.put(this.APIEndpoint+'update/request/'+reqObj._id,reqObj)
+            .pipe(map(res => {
+                return res;
+            }));
+    }
+
     getExamConfigRestrict() {
         return this.http.get(this.APIEndpoint+'examConfig/restrict',this.httpOptions)
             .pipe(map(res => {
@@ -102,6 +109,12 @@ export class Services {
     }
     getRequests() {
         return this.http.get(this.APIEndpoint+'exam/requests',this.httpOptions)
+            .pipe(map(res => {
+                return res;
+            }));
+    }
+    getExamRequests(id) {
+        return this.http.get(this.APIEndpoint+'requests/get/exams/'+id)
             .pipe(map(res => {
                 return res;
             }));

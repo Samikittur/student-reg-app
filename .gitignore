@@ -42,10 +42,3 @@ testem.log
 .DS_Store
 Thumbs.db
 
-/*.env
-/server.js
-/server.js
-/.env
-/.env
-/server.js
-/routes

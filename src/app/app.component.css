@@ -4,3 +4,6 @@
 .hide{
     display:none;
 }
+.nav-link.active-link{
+    color: #339FEC !important;
+}

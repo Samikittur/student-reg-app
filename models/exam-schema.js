@@ -4,9 +4,11 @@ const Schema = mongoose.Schema;
 const exam = mongoose.Schema({
     id: {
         type: String,
+        required:true
       },
     type:{
         type: String,
+        required:true
       }},
     {collection:"exam"});
     

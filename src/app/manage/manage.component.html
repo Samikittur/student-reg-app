@@ -37,12 +37,12 @@
                     </div>
                     <div class="form-row"> 
                         <div class="form-group col-md-12">
-                            <input type="text" maxlength="2" ngModel name="seatlimit" value="" class="form-control" placeholder="Seat limit" id="seatlimit">
+                            <input type="text" maxlength="2" required="required" ngModel name="seatlimit" value="" class="form-control" placeholder="Seat limit" id="seatlimit">
                         </div>  
                       </div>
                       <div class="form-row"> 
                           <div class="form-group col-md-12">
-                      <button type="submit" class="btn btn-success">
+                      <button type="submit" class="btn btn-success" [disabled] ="!ConfigForm.form.valid && examModel > 0">
                           <i class="fa fa-sign-in"></i> Submit</button>
                       </div>
                     </div>    

@@ -6,27 +6,15 @@
             <th>State</th>
             <th>City</th>
             <th>Exam</th>
-            <th>Father Name</th>
-            <th>Last Name</th>
-            <th>Mobile no</th>
-            <th>City</th>
-            <th>Street</th>
-            <th>Address</th>
             <th>Zipcode</th>
             <th class="align-center">X</th>
           </tr>
     </thead>
     <tbody>
-    <tr *ngFor = "let request of requestsData; let i = index" data-id="{{request._id}}" [class.highlighted]="request._id === currentName">
+    <tr *ngFor = "let request of requestsData; let i = index" data-id="{{request._id}}" [class.highlighted]="request._id === currentName" (click)="viewDetails(request)">
       <td>{{request.stateid}}</td>
       <td>{{request.cityid}}</td>
       <td>{{request.exam_code}}</td>
-      <td>{{request.father_name}}</td>
-      <td>{{request.last_name}}</td>
-      <td>{{request.mobileno}}</td>
-      <td>{{request.city}}</td>
-      <td>{{request.street}}</td>
-      <td>{{request.address}}</td>
       <td>{{request.zipcode}}</td>
       <td width="100" class="align-center">
          <button type="button" class="btn btn-danger delete" (click)="rejectRequest(request._id,i)"><i class="fa fa-trash" style="font-size: 18px;"></i></button>

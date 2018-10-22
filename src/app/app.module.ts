@@ -12,10 +12,11 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { ManageComponent } from './manage/manage.component';
 import { RequestsComponent } from './requests/requests.component';
 
-import { MatDialogModule, MatButtonModule, MatCardModule } from '@angular/material';
+import { MatDialogModule, MatButtonModule, MatCardModule} from '@angular/material';
 import { MatDialogComponent } from './mat-dialog/mat-dialog.component';
 import { AdminAuthGuard } from './admin-auth.guard';
 import { UserAuthGuard } from './user-auth.guard';
+import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { UserAuthGuard } from './user-auth.guard';
     AdminDashboardComponent,
     ManageComponent,
     RequestsComponent,
-    MatDialogComponent
+    MatDialogComponent,
+    UserDashboardComponent
   ],
   entryComponents: [
     MatDialogComponent
