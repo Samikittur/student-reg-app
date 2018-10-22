@@ -16,7 +16,7 @@ import { MatDialogModule, MatButtonModule, MatCardModule} from '@angular/materia
 import { MatDialogComponent } from './mat-dialog/mat-dialog.component';
 import { AdminAuthGuard } from './admin-auth.guard';
 import { UserAuthGuard } from './user-auth.guard';
-import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
+import { UserDashboardComponent } from "./user-dashboard/user-dashboard.component";
 
 @NgModule({
   declarations: [
