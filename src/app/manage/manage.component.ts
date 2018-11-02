@@ -131,7 +131,6 @@ export class ManageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed'+result);
       if(result == 'Confirm'){
         this.Services.deleteExamConfig(id).subscribe(deletedConfig=>{
           var modelData = {title:"SUCCESS",message:"Configuration Deleted Successfully", modelType:"default"};

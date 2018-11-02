@@ -1,6 +1,7 @@
 require('dotenv/config');
+const db = process.env.MDB_ENV;
 module.exports = {
     //database:'mongodb://localhost:27017/students',
-    database: process.env.MDB_ENV,
+    database: db,
     secret: process.env.SECRET_CODE
 }

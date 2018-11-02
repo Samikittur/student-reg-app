@@ -2,26 +2,29 @@
   <h2 class="mt-5"></h2>
   <div class="row">
     <div class="col-md-2 center">
-     <div class="profile-pic">
+      <div class="profile-pic">
 
-     </div>
+      </div>
     </div>
     <div class="col-md-10">
-     <div class="user-name">{{user.name}}</div>
-     <div class="email-address">{{user.email}} -- +91-8623232313</div>
-     <hr>
-     <div class="row">
-     <div class="col-md-3 exam-details exam"><label>EXAM</label></div>
-     <div class="col-md-3 exam-details status"><label>Status</label></div>
-     <div class="col-md-3 exam-details date"><label>Date</label></div>
-     <div class="col-md-3 exam-details score"><label>Total Score</label></div>
+      <div class="user-name">{{user.name}}</div>
+      <div class="email-address">{{user.email}} -- +91-8623232313</div>
+      <hr>
+      <div class="row">
+        <div class="col-md-2 exam-details exam"><label>EXAM</label></div>
+        <div class="col-md-2 exam-details status"><label>Registered</label></div>
+        <div class="col-md-3 exam-details status"><label>Status</label></div>
+        <div class="col-md-2 exam-details date"><label>Exam Date</label></div>
+        <div class="col-md-2 exam-details score"><label>Total Score</label></div>
+      </div>
+      <div class="row" *ngFor="let exam of userExamList">
+        <div class="col-md-2 exam-details exam"><span>{{exam.exam_code}}</span></div>
+        <div class="col-md-2 exam-details status"><span>{{exam.regdate | date:'MM/dd/yyyy'}}</span></div>
+        <div class="col-md-3 exam-details status"><span>{{exam.status}}</span></div>
+        <div class="col-md-2 exam-details date"><span>{{exam.examdate !="---"?(exam.examdate |
+            date:'MM/dd/yyyy'):(exam.examdate)}}</span></div>
+        <div class="col-md-2 exam-details score"><span>{{exam.totalscore}}%</span></div>
+      </div>
     </div>
-    <div class="row" *ngFor="let exam of userExamList">
-      <div class="col-md-3 exam-details exam"><span>{{exam.exam_code}}</span></div>
-      <div class="col-md-3 exam-details status"><span>{{exam.status}}</span></div>
-      <div class="col-md-3 exam-details date"><span>{{exam.examdate}}</span></div>
-      <div class="col-md-3 exam-details score"><span>{{exam.totalscore}}%</span></div>
-     </div>
-  </div>
   </div>
 </div>
