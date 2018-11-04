@@ -45,3 +45,6 @@ Thumbs.db
 /server.js
 /routes
 /.env
+/config
+/routes
+/server.js
