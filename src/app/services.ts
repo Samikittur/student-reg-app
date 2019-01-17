@@ -6,7 +6,6 @@ import { environment } from '../environments/environment';
 export class Services { 
     APIEndpoint = environment.baseUrl;
    // domainPort = 'https://exam-reg.herokuapp.com/api/'; 
-    
     public httpOptions = {
             headers: new HttpHeaders({ 'authorization':'Bearer '+localStorage.getItem('jwtToken') }),
            };

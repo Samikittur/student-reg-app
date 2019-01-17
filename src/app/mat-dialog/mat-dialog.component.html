@@ -109,7 +109,7 @@
         <div class=" form-group col-md-6">
           <mat-form-field>
             <input matInput [matDatepicker]="examDatePicker" placeholder="Exam Date" [(ngModel)]="data.examdate" name="examDate" 
-            readonly [min]="regdate" disabled="{{editmode}}">
+            readonly [min]="disableDatesFrom" disabled="{{editmode}}">
             <mat-datepicker-toggle matSuffix [for]="examDatePicker"></mat-datepicker-toggle>
             <mat-datepicker [touchUi]="touch" #examDatePicker disabled="{{editmode}}"></mat-datepicker>
           </mat-form-field>

@@ -11,11 +11,15 @@ import { Services } from '../services'
 export class MatDialogComponent implements OnInit {
   editmode = true;
   regdate: any;
+  disableDatesFrom:any;
   constructor(private Service:Services, public thisDialogRef: MatDialogRef<MatDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
   ngOnInit() {
-  //  if(!this.data.regdate) return;
-  //  var from = this.data.regdate.split("/");
+    const today = new Date();
     this.regdate = new Date(this.data.regdate);
+    this.disableDatesFrom = this.regdate;
+    if(this.regdate < today){
+      this.disableDatesFrom = today;
+    }
   }
 
   onCloseConfirm() {
