@@ -1,0 +1,35 @@
+.profile-pic{
+    width: 160px;
+    height: 160px;
+    display: inline-block;
+    background: #ccc;
+    border: #999999;
+    border-radius:100% 100%;
+    background:  url('/assets/images/profile.jpg') 0px 14px;
+}
+.user-name{
+    color:royalblue;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.email-address{
+    color: #999999;
+    font-size: 14px;
+}
+.center{
+    text-align: center;
+}
+
+.exam-details{
+    font-size: 14px;
+}
+
+.exam-details label{
+    width: 100%;
+    margin-bottom: 15px;
+    color: 999999;
+    font-weight: bold;
+}
+.exam-details span{
+    color: black;
+}

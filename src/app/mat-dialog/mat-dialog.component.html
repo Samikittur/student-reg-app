@@ -1,24 +1,138 @@
 <div *ngIf="data.modelType=='default'">
-    <h2 mat-dialog-title>{{data.title}}</h2>
-    <hr>
-    <mat-dialog-content>
-        {{data.message}}
-    </mat-dialog-content>
-    <hr>
-    <mat-dialog-actions>
-      <button mat-raised-button (click)="onCloseCancel()" color="primary" class="mat-raised-button mat-primary">OK</button>
-    </mat-dialog-actions>
-  </div>
+  <h2 mat-dialog-title>{{data.title}}</h2>
+  <hr>
+  <mat-dialog-content>
+    {{data.message}}
+  </mat-dialog-content>
+  <hr>
+  <mat-dialog-actions>
+    <button mat-raised-button (click)="onCloseCancel()" color="primary" class="mat-raised-button mat-primary">OK</button>
+  </mat-dialog-actions>
+</div>
 
-  <div *ngIf="data.modelType=='confirm'">
-    <h2 mat-dialog-title>{{data.title}}</h2>
-    <hr>
-    <mat-dialog-content>
-        {{data.message}}
-    </mat-dialog-content>
-    <hr>
-    <mat-dialog-actions>
-      <button mat-raised-button (click)="onCloseConfirm()" color="primary" class="mat-raised-button mat-primary">Delete</button>
-      <button mat-raised-button (click)="onCloseCancel()" color="primary" class="mat-raised-button mat-primary">Cancel</button>
-    </mat-dialog-actions>
-  </div>  
+<div *ngIf="data.modelType=='confirm'">
+  <h2 mat-dialog-title>{{data.title}}</h2>
+  <hr>
+  <mat-dialog-content>
+    {{data.message}}
+  </mat-dialog-content>
+  <hr>
+  <mat-dialog-actions>
+    <button mat-raised-button (click)="onCloseConfirm()" color="primary" class="mat-raised-button mat-primary">Delete</button>
+    <button mat-raised-button (click)="onCloseCancel()" color="primary" class="mat-raised-button mat-primary">Cancel</button>
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.modelType=='viewReqDetails'">
+  <h2 mat-dialog-title>{{data.title}}</h2>
+  <hr>
+  <mat-dialog-content>
+    <form class="form-horizontal" name="updateReg" role="form" #UpdateForm="ngForm">
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <h6>Registeration Details</h6>
+        </div>
+        <div class="form-group col-md-6">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="State" name="examState" [disabled]="true" [(ngModel)]="data.stateid">
+          </mat-form-field>
+        </div>
+        <div class="form-group col-md-6">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="City" name="examCity" [disabled]="true" [(ngModel)]="data.cityid">
+          </mat-form-field>
+        </div>
+        <div class="form-group col-md-6">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Exam" name="exam" [disabled]="true" [(ngModel)]="data.exam_code">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <h6>Personal Details</h6>
+        </div>
+        <div class=" form-group col-md-6">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Father Name" name="fatherName" [disabled]="true" [(ngModel)]="data.father_name">
+          </mat-form-field>
+        </div>
+        <div class="form-group col-md-6">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Last Name" name="lastName" [disabled]="true" [(ngModel)]="data.last_name">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Mobile No." name="mobileNo" [disabled]="true" [(ngModel)]="data.mobileno">
+          </mat-form-field>
+        </div>
+        <div class="form-group col-md-6">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="City" name="city" [disabled]="true" [(ngModel)]="data.city">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Street" name="street" [disabled]="true" [(ngModel)]="data.street">
+          </mat-form-field>
+        </div>
+        <div class="form-group col-md-6">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Address" name="address" [disabled]="true" [(ngModel)]="data.address">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Zipcode" name="zipcode" [disabled]="true" [(ngModel)]="data.zipcode">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <h6>Exam Details</h6>
+        </div>
+        <div class=" form-group col-md-6">
+          <mat-form-field color="accent">
+            <input matInput [matDatepicker]="regDatePicker" [disabled]="true" placeholder="Register Date" name="regDate" [(ngModel)]="regdate"
+                [disabled]="inputDisabled" [max]="data.examdate">
+            <mat-datepicker-toggle matSuffix [for]="regDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker [touchUi]="touch" #regDatePicker disabled="true" [touchUi]="touch"></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class=" form-group col-md-6">
+          <mat-form-field>
+            <input matInput [matDatepicker]="examDatePicker" placeholder="Exam Date" [(ngModel)]="data.examdate" name="examDate" 
+            readonly [min]="disableDatesFrom" disabled="{{editmode}}">
+            <mat-datepicker-toggle matSuffix [for]="examDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker [touchUi]="touch" #examDatePicker disabled="{{editmode}}"></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="form-group col-md-6">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Status" name="examstatus" [disabled]="editmode" [(ngModel)]="data.status">
+          </mat-form-field>
+        </div>
+        <div class="form-group col-md-6">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Total Score" name="totalScore" [disabled]="editmode" [(ngModel)]="data.totalscore">
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </mat-dialog-content>
+  <hr>
+  <mat-dialog-actions>
+
+    <button mat-raised-button (click)="onFormCloseConfirm(UpdateForm,data._id)" *ngIf="!editmode" [disabled]="!UpdateForm.form.valid"
+      color="primary" class="mat-raised-button mat-primary">Save</button>
+    <button mat-raised-button *ngIf="editmode" (click)="onEditMode(data)" color="primary" class="mat-raised-button mat-primary">Edit</button>
+    <button mat-raised-button (click)="onCloseCancel()" color="primary" class="mat-raised-button mat-primary">Cancel</button>
+  </mat-dialog-actions>
+</div>

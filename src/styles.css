@@ -1,6 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+body{
+  margin-bottom: 30px;
+}
 .navbar-dark .navbar-nav .nav-link{
     color:rgba(255, 255, 255, 0.8);
 }
@@ -132,5 +135,10 @@
   .loggedout .navbar-collapse{
     flex-basis: 0 !important;
     flex-grow: 0 !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  mat-form-field.example-full-width{
+    width: 100%;
   }
 }

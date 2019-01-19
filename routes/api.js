@@ -19,12 +19,11 @@ mongoose.connect(db.database, (err) => {
     if (err) {
         res.json(err);
     } else {
-        console.log('connected');
+        console.log('Database Connected Successfully');
     }
 });
 
 router.post('/createToken', function (req, res) {
-    console.log(req.token);
     const user = {
         id: 1,
         name: 'Sami',
@@ -171,17 +170,6 @@ router.delete('/delete/examconfig/:id', function (req, res) {
         }
     });
 });
-//Delete examconfig
-router.delete('/delete/examconfig/:id', function (req, res) {
-    examConfigModel.findByIdAndRemove(req.params.id, function (err, deletedExamConfig) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json(deletedExamConfig);
-        }
-    });
-});
-
 //Register exam
 router.post('/exam/register', (req, res) => {
     examConfigModel.findOne({
@@ -191,9 +179,9 @@ router.post('/exam/register', (req, res) => {
             return res.json(err);
         } else {
             if (result) {
-                console.log("Rem Seats: " + result.remaining);
                 if (result.remaining > 0) {
                     const examModel = new examRegisterModel();
+                    const today = new Date();
                     examModel.userid = req.body.userid;
                     examModel.stateid = req.body.stateid;
                     examModel.cityid = req.body.cityid;
@@ -205,6 +193,10 @@ router.post('/exam/register', (req, res) => {
                     examModel.street = req.body.street;
                     examModel.address = req.body.address;
                     examModel.zipcode = req.body.zipcode;
+                    examModel.regdate = today;
+                    examModel.examdate = "---";
+                    examModel.status = "Exam Registered";
+                    examModel.totalscore = "---";
                     checkDuplicate(examRegisterModel, res, result, req, examModel);
                 } else {
                     return res.json({ reg: "failed", message: "No seat available.", errorCode: 7012 });
@@ -215,6 +207,26 @@ router.post('/exam/register', (req, res) => {
         }
 
     });
+});
+
+router.put('/update/request/:id', (req, res) => {
+    examRegisterModel.findByIdAndUpdate(req.params.id, {
+        $set: {
+            examdate: req.body.examDate,
+            totalscore: req.body.totalScore,
+            status: req.body.examstatus
+        }
+    },
+        {
+            new: true
+        },
+        function (err, updatedReqModel) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json({ entry: 'Updated' });
+            }
+        });
 });
 
 function registerExam(examModel, result, res) {
@@ -235,7 +247,6 @@ function registerExam(examModel, result, res) {
 }
 
 function checkDuplicate(examRegisterModel, res, result, req, examModel) {
-    console.log(req.body.exam);
     var examRegister = examRegisterModel.find({ userid: req.body.userid }).exec();
     examRegister.then(function (user) {
         if (!user) {
@@ -243,7 +254,6 @@ function checkDuplicate(examRegisterModel, res, result, req, examModel) {
         } else {
             var duplicate = false;
             user.map(userData => {
-                console.log("exm Code: " + userData.exam_code + "req code: " + req.body.exam);
                 if (userData.exam_code == req.body.exam) {
                     duplicate = true;
                 }
@@ -276,8 +286,8 @@ function updateConfigCollection(examConfigModel, remCount, result, res) {
             }
         });
 }
-//Get Exam request
-router.get('/exam/requests', verifyToken, function (req, res) {
+//Get Exam request to disable config
+router.get('/examConfig/restrict', verifyToken, function (req, res) {
     jwt.verify(req.token, db.secret, function (err, authData) {
         if (err) {
             return res.status(403).send({ success: false, msg: 'Unauthorized.' });
@@ -287,37 +297,62 @@ router.get('/exam/requests', verifyToken, function (req, res) {
                     console.log(err);
                     res.json(err);
                 } else {
-                    res.json(result);
+                    const getexamCode = []
+                    result.map(reqItem => {
+                        getexamCode.push(reqItem.exam_code);
+                    });
+                    let unique_array = getexamCode.filter(function (elem, index, self) {
+                        return index == self.indexOf(elem);
+                    });
+                    res.json(unique_array);
                 }
             });
+        }
+    });
+
+});
+//Get Exam request
+router.get('/exam/requests', verifyToken, async function (req, res) {
+    jwt.verify(req.token, db.secret, async function (err, authData) {
+        if (err) {
+            res.status(403).send({ success: false, msg: 'Unauthorized.' });
+        } else {
+            try {
+                const examRegModel = await examRegisterModel.find({});
+                res.json(examRegModel);
+            } catch (err) {
+                res.json(err);
+            }
         }
     });
 
 });
 //Delete exam request
-router.delete('/requests/delete/:id', function (req, res) {
-    examRegisterModel.findById({ _id: req.params.id }, function (err, result) {
-        if (err) {
-            console.log(err);
-        } else {
-            examConfigModel.findOne({ examcode: result.exam_code }, function (err, exanConfig) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    const remCount = exanConfig.remaining + 1;
-                    examRegisterModel.findByIdAndRemove(req.params.id, function (err, deletedRequest) {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            updateConfigCollection(examConfigModel, remCount, exanConfig, res);
-                        }
-                    });
-                }
-            });
-        }
-    });
+router.delete('/requests/delete/:id', async function (req, res) {
+    try {
+        const examRegModel = await examRegisterModel.findById({ _id: req.params.id });
+        const examConfigMod = await examConfigModel.findOne({ examcode: examRegModel.exam_code });
+        const remCount = examConfigMod.remaining + 1;
+        const examRegModelRemove = await examRegisterModel.findByIdAndRemove(req.params.id);
+        updateConfigCollection(examConfigModel, remCount, examRegModelRemove, res);
+    } catch (err) {
+        res.json(err);
+    }
 });
+//get register exams request by users
+router.get('/requests/get/exams/:id', async function (req, res) {
+    try {
+        const examRegModel = await examRegisterModel.find({ userid: req.params.id });
+        await examRegModel.map(async function (examRegItem) {
+            const examModel = await examSchemaModel.find({ id: examRegItem.exam_code });
+            examRegItem.examType = examModel.type;
+        });
+        res.json(examRegModel);
 
+    } catch (err) {
+        res.json(err);
+    }
+});
 //Post
 router.post('/signup', (req, res) => {
     const newUser = new usersSchemaModel();
@@ -358,6 +393,7 @@ router.post('/signin', function (req, res) {
                 if (isMatch && !err) {
                     // if user is found and password is right create a token
                     var token = jwt.sign(user.toJSON(), db.secret);
+                   // var token = jwt.sign(user.toJSON(), db.secret,{expiresIn: '1h' }); with exipiry
                     // return the information including token as JSON
                     const returnUser = {
                         id: user._id,
@@ -385,6 +421,21 @@ function verifyToken(req, res, next) {
     } else {
         res.sendStatus(403);
     }
+}
+
+function todaysDate() {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    return dd + '/' + mm + '/' + yyyy;
 }
 
 //export the router to main application file

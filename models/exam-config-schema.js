@@ -4,9 +4,11 @@ const Schema = mongoose.Schema;
 const examconfig = mongoose.Schema({
     stateid: {
         type: Number,
+        required:true
       },
     cityid:{
         type: Number,
+        required:true
       },
     examcode:{
         type: Number,
@@ -16,9 +18,11 @@ const examconfig = mongoose.Schema({
     },
     seatlimit:{
         type: Number,
+        required:true
     },
     remaining:{
         type: Number,
+        required:true
     }},
     {collection:"examconfig"});
     

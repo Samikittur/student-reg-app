@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Services } from '../services';
 import { AuthServices } from '../auth.service';
+import { AuthService, FacebookLoginProvider, GoogleLoginProvider,LinkedinLoginProvider} from 'angular-6-social-login';
 
 @Component({
   selector: 'app-signin',
@@ -27,7 +28,8 @@ export class SigninComponent implements OnInit {
   constructor(private AuthServices : AuthServices, 
               private Services: Services, 
               private router: Router, 
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private socialAuthService: AuthService) {
   this.AuthServices.userAuth('register');
   }
 
@@ -69,4 +71,23 @@ export class SigninComponent implements OnInit {
       this.logging = false;
     });
    }
+
+   public socialSignIn(socialPlatform : string) {
+    let socialPlatformProvider;
+    if(socialPlatform == "facebook"){
+      socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+    }else if(socialPlatform == "google"){
+      socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+    } else if (socialPlatform == "linkedin") {
+      socialPlatformProvider = LinkedinLoginProvider.PROVIDER_ID;
+    }
+    
+    this.socialAuthService.signIn(socialPlatformProvider).then(
+      (userData) => {
+        console.log(socialPlatform+" sign in data : " , userData);
+        this.router.navigate(['/register']);
+            
+      }
+    );
+  }
 }

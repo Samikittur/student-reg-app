@@ -26,7 +26,6 @@ export class AdminDashboardComponent implements OnInit {
    this.adminList =[];
    this.usersList =[];
     this.Services.getAllUser().subscribe(getList =>{
-      console.log(getList);
      const stringifyData = JSON.stringify(getList);
      const parseData = JSON.parse(stringifyData);
       parseData.map(function(list){
@@ -53,7 +52,6 @@ export class AdminDashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed'+result);
       if(result == 'Confirm'){
         this.Services.deleteUser(id).subscribe(deletedConfig=>{
           var modelData = {title:"SUCCESS",message:"User Deleted Successfully", modelType:"default"};

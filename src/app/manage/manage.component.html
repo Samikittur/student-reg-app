@@ -37,12 +37,12 @@
                     </div>
                     <div class="form-row"> 
                         <div class="form-group col-md-12">
-                            <input type="text" maxlength="2" ngModel name="seatlimit" value="" class="form-control" placeholder="Seat limit" id="seatlimit">
+                            <input type="text" maxlength="2" required="required" ngModel name="seatlimit" value="" class="form-control" placeholder="Seat limit" id="seatlimit">
                         </div>  
                       </div>
                       <div class="form-row"> 
                           <div class="form-group col-md-12">
-                      <button type="submit" class="btn btn-success">
+                      <button type="submit" class="btn btn-success" [disabled] ="!ConfigForm.form.valid && examModel > 0">
                           <i class="fa fa-sign-in"></i> Submit</button>
                       </div>
                     </div>    
@@ -69,7 +69,7 @@
       <td>{{examConfig.seatlimit}}</td>
       <td>{{examConfig.remaining}}</td>
       <td width="100" class="align-center">
-         <button type="button" class="btn btn-danger delete" (click)="deleteExamConfig(examConfig._id)"><i class="fa fa-trash" style="font-size: 18px;"></i></button>
+         <button type="button" class="btn btn-danger delete" [disabled] ="examConfig.deleteme" (click)="deleteExamConfig(examConfig._id)"><i class="fa fa-trash" style="font-size: 18px;"></i></button>
       </td>
     </tr>  
     <tr *ngIf="examConfigList?.length < 1">

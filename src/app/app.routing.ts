@@ -10,6 +10,7 @@ import { ManageComponent } from './manage/manage.component';
 import { RequestsComponent } from './requests/requests.component'
 import { AdminAuthGuard } from './admin-auth.guard';
 import { UserAuthGuard } from './user-auth.guard';
+import { UserDashboardComponent } from "./user-dashboard/user-dashboard.component";
 
 const appRoutes:Routes =[
 {
@@ -39,6 +40,11 @@ const appRoutes:Routes =[
     path:'requests',
     component:RequestsComponent,
     canActivate:[AdminAuthGuard]
+},
+{
+    path:'userdashboard',
+    component:UserDashboardComponent,
+    canActivate:[UserAuthGuard]
 },  
 {
     path: '404',

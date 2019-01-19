@@ -84,9 +84,9 @@
           <div class="col-md-6">
               <ul class="login-with">
                   <li>Sign In with : </li>
-                  <li class="google-btn"><i class="fa fa-google"></i> Google</li>
-                  <li class="facebook-btn"><i class="fa fa-facebook-square"> </i> facebook</li>
-                  <li class="twitter-btn"><i class="fa fa-twitter"></i> twitter</li>
+                  <li class="google-btn" (click)="socialSignIn('google')"><i class="fa fa-google"></i> Google</li>
+                  <li class="facebook-btn" (click)="socialSignIn('facebook')"><i class="fa fa-facebook-square"> </i> facebook</li>
+                  <li class="twitter-btn" (click)="socialSignIn('twitter')"><i class="fa fa-twitter"></i> twitter</li>
               </ul>
           </div> 
      </div>

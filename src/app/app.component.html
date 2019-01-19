@@ -1,55 +1,64 @@
 <!--The content below is only a placeholder and can be replaced.-->
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" [class.loggedout]="!loggedIn">
-    <div class="container">
-      <a class="navbar-brand" routerLink="home">
-        <img src="http://placehold.it/300x60?text=Logo" width="150" height="30" alt="">
-      </a>
-      <button class="navbar-toggler" type="button" [class.hide]="!loggedIn" data-toggle="collapse" (click)="toggleNavbar()" data-target="#navbarResponsive" aria-controls="navbarResponsive"
-        aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" [class.collapse]="!navbarOpen" id="navbarResponsive">
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" [class.loggedout]="!loggedIn">
+  <div class="container">
+    <a class="navbar-brand" routerLink="home">
+      <img src="http://placehold.it/300x60?text=Logo" width="150" height="30" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" [class.hide]="!loggedIn" data-toggle="collapse" (click)="toggleNavbar()" data-target="#navbarResponsive"
+      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" [class.collapse]="!navbarOpen" id="navbarResponsive">
       <ul class="navbar-nav ml-auto" *ngIf="loggedIn && checkAdminUser">
         <li class="nav-item">
-            <a class="nav-link" routerLink="manage">Manage Exam Configuration</a>
+          <a class="nav-link" routerLink="admindash" routerLinkActive="active-link">Manage Users</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="admindash">Manage Users</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="requests">Requests</a>
+            <a class="nav-link" routerLink="requests" routerLinkActive="active-link">Requests</a>
           </li>
-        <li class="nav-item" [class.hide]="navbarOpen">
-            <a class="nav-link">|</a>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="manage" routerLinkActive="active-link">Manage Exam Configuration</a>
         </li>
       </ul>
-        <ul class="navbar-nav ml-auto" [class.ml-auto]="userType!='admin'" *ngIf="loggedIn">
+      <ul class="navbar-nav ml-auto" [class.ml-auto]="userType!='admin'" *ngIf="loggedIn && checkUser">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="userdashboard" routerLinkActive="active-link">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="register" routerLinkActive="active-link">Register New Exam</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav" *ngIf="loggedIn">
+        <li class="nav-item" [class.hide]="navbarOpen">
+          <a class="nav-link">|</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link username">{{userEmail}}</a>
-        </li>  
+        </li>
         <li class="nav-item" [class.hide]="navbarOpen">
-            <a class="nav-link">|</a>
+          <a class="nav-link">|</a>
         </li>
-          <li class="nav-item">
-            <a class="btn btn-success" routerLink="" (click)="logout()"><i class="fa fa-sign-in"></i> Sign Out</a>
-          </li>
-          </ul>
-      </div>
-      <ul class="navbar-nav ml-auto" *ngIf="!loggedIn">
-        <li class="nav-item" *ngIf="contolsFlag">
-          <a class="btn btn-success" routerLink="signup"><i class="fa fa-sign-in"></i> Sign Up</a>
+        <li class="nav-item">
+          <a class="btn btn-success" routerLink="" (click)="logout()">
+            <i class="fa fa-sign-in"></i> Sign Out</a>
         </li>
-        <li class="nav-item" *ngIf="!contolsFlag">
-          <a class="btn btn-success" routerLink="signin"><i class="fa fa-sign-in"></i> Sign In</a>
-        </li>
-    </ul>
+      </ul>
     </div>
-    <div></div>
-  </nav>
+    <ul class="navbar-nav ml-auto" *ngIf="!loggedIn">
+      <li class="nav-item" *ngIf="contolsFlag">
+        <a class="btn btn-success" routerLink="signup">
+          <i class="fa fa-sign-in"></i> Sign Up</a>
+      </li>
+      <li class="nav-item" *ngIf="!contolsFlag">
+        <a class="btn btn-success" routerLink="signin">
+          <i class="fa fa-sign-in"></i> Sign In</a>
+      </li>
+    </ul>
+  </div>
+  <div></div>
+</nav>
 
-    <router-outlet></router-outlet>
+<router-outlet></router-outlet>
 
-
-
-
+<footer>Student Registeration Copyright 2018</footer>
