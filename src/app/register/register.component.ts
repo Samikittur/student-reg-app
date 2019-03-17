@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Services } from '../services';
 import { AuthServices } from '../auth.service';
-import { MatDialogComponent } from '../mat-dialog/mat-dialog.component'
+import { MatDialogComponent } from '../mat-dialog/mat-dialog.component';
+import {FormBuilder,FormGroup,Validators} from '@angular/forms'
+import { ValidateSelect } from '../validators/select.validators';
+import { isNumber } from '../validators/number.validator';
 @Component({
   selector: 'register-home',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers: [Services,AuthServices]
+  providers: [Services,AuthServices,FormBuilder]
 })
 export class RegisterComponent implements OnInit {
 statesList : any;
@@ -21,18 +23,34 @@ stateModel = 0;
 citiesModel = 0;
 examModel = 0;
 loading = false;
+registerForm:FormGroup;
 constructor(private AuthServices:AuthServices,
             public Services:Services, 
             private router : Router, 
             private route:ActivatedRoute,
-            public dialog: MatDialog) {
+            public dialog: MatDialog,
+            private fb:FormBuilder) {
     this.AuthServices.userAuth('register');
   }
 
   ngOnInit() {
     this.getStatesList();
+    this.formValidation();
   }
-
+  formValidation(){
+    this.registerForm = this.fb.group({
+      examState:['0',[Validators.required,ValidateSelect]],
+      examCity:['0',[Validators.required,ValidateSelect]],
+      exam:['0',[Validators.required,ValidateSelect]],
+      fatherName:['',[Validators.required]],
+      lastName:['',[Validators.required]],
+      mobileNo:['',[Validators.required]],
+      city:['',[Validators.required]],
+      street:['',[Validators.required]],
+      address:['',[Validators.required]],
+      zipcode:['',[Validators.required,isNumber]],
+    });
+  }
   getStatesList(){
     this.Services.getStates().subscribe(getList =>{
       this.statesList = getList;
@@ -58,22 +76,22 @@ constructor(private AuthServices:AuthServices,
       this.examination = parseData;
     });
   }
-  register(form:NgForm){
+  register(form){
     this.loading = true
     const getUserId = localStorage.getItem('userData');
     const userDataParsed = JSON.parse(getUserId);
     const regDetails = {
       userid:userDataParsed.id,
-      stateid:form.value.examState,
-      cityid:form.value.examCity,
-      exam:form.value.exam,
-      father_name:form.value.fatherName,
-      last_name:form.value.lastName,
-      mobileno:form.value.mobileNo,
-      city:form.value.city,
-      street:form.value.street,
-      address:form.value.address,
-      zipcode:form.value.zipcode
+      stateid:form.examState,
+      cityid:form.examCity,
+      exam:form.exam,
+      father_name:form.fatherName,
+      last_name:form.lastName,
+      mobileno:form.mobileNo,
+      city:form.city,
+      street:form.street,
+      address:form.address,
+      zipcode:form.zipcode
     }
     var modelData = {title:"",message:"",modelType:"default"};
     this.Services.registerExam(regDetails).subscribe(resObj=>{

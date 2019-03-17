@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { RoutingComponent} from './app.routing';
 import { Services} from './services';
 import { HttpClientModule } from '@angular/common/http';
-import {FormsModule, FormControlName} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppRouterModule } from './app.routing';
 import { AppComponent } from './app.component';
 import { AuthServices} from './auth.service';
@@ -131,6 +131,7 @@ export function getAuthServiceConfigs() {
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+    ReactiveFormsModule
   ],
   providers: [Services,AuthServices,AdminAuthGuard,UserAuthGuard,{
     provide: AuthServiceConfig,

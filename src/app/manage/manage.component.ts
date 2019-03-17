@@ -2,15 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Services } from '../services';
 import { MatDialog } from '@angular/material';
-import { NgForm } from '@angular/forms';
 import { AuthServices } from '../auth.service';
 import { MatDialogComponent } from '../mat-dialog/mat-dialog.component';
+import {FormBuilder,FormGroup,Validators} from '@angular/forms'
+import { ValidateSelect } from '../validators/select.validators';
+import { isNumber } from '../validators/number.validator';
 // https://stackblitz.com/angular/oojygndaamg?file=main.ts
 @Component({
   selector: 'app-manage',
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css'],
-  providers:[Services,AuthServices]
+  providers:[Services,AuthServices,FormBuilder]
 })
 export class ManageComponent implements OnInit {
   statesList : any;
@@ -25,17 +27,29 @@ export class ManageComponent implements OnInit {
   loading = true;
   message ="";
   restrictExam={};
+  manageForm : FormGroup;
   constructor(private AuthServices:AuthServices,
               public Services:Services, 
               private router : Router, 
               private route:ActivatedRoute, 
-              private dialog: MatDialog ) {
+              private dialog: MatDialog, 
+              private fb:FormBuilder) {
     this.AuthServices.userAuth('manage');
   }
 
   ngOnInit() {
     this.getStatesList();
     this.getExamConfig();
+    this.formValidation();
+  }
+
+  formValidation(){
+    this.manageForm = this.fb.group({
+      state:['0',[Validators.required,ValidateSelect]],
+      city:['0',[Validators.required,ValidateSelect]],
+      exam:['0',[Validators.required,ValidateSelect]],
+      seatlimit:['',[Validators.required,isNumber]],
+    });
   }
   getStatesList(){
     this.Services.getStates().subscribe(getList =>{
@@ -64,15 +78,15 @@ export class ManageComponent implements OnInit {
       this.loading = false;
     });
   } 
-  setConfig(form: NgForm){
+  setConfig(data){
     this.loading = true;
     var modelData = {title:"",message:"",modelType:"default"};
     const exam = {
-      stateid:form.value.state,
-      cityid:form.value.city,
-      examcode:form.value.exam,
-      seatlimit:form.value.seatlimit,
-      remaining:form.value.seatlimit
+      stateid:data.state,
+      cityid:data.city,
+      examcode:data.exam,
+      seatlimit:data.seatlimit,
+      remaining:data.seatlimit
     }
     this.Services.setExamConfig(exam).subscribe(config=>{
       this.examConfig = config;

@@ -3,7 +3,7 @@
     </h3>
     <div class="row">
         <div class="col-md-3">
-            <form class="form-horizontal"  role="form" (ngSubmit)="setConfig(ConfigForm)" #ConfigForm="ngForm">
+            <form class="form-horizontal"  [formGroup]="manageForm" (ngSubmit)="setConfig(manageForm.value)">
                 <div class="row">
                   </div>
                   <div class="form-row">
@@ -13,36 +13,36 @@
                      </div> 
                       <div class="form-row">
                       <div class="form-group col-md-12">
-                        <select id="inputState" name="state" [(ngModel)]="stateModel" class="form-control" (change)="getCitiesList($event.target.value)">
-                          <option selected [value]="0">Select state</option>
+                        <select formControlName ="state" class="form-control" (change)="getCitiesList($event.target.value)">
+                          <option selected value="0">Select state</option>
                           <option [value]="state.id" *ngFor="let state of statesList">{{state.name}}</option>
                         </select>
                       </div>
                       </div>
                       <div class="form-row">
                       <div class="form-group col-md-12">
-                          <select id="inputState" name="city" [(ngModel)]="citiesModel" class="form-control" (change)="getExamsList()">
-                              <option selected [value]="0">Select City</option>
+                          <select formControlName="city" [(ngModel)]="citiesModel" class="form-control" (change)="getExamsList()">
+                              <option selected value="0">Select City</option>
                               <option [value]="cities.id" *ngFor="let cities of citiesList">{{cities.name}}</option>
                             </select>
                       </div>
                       </div>
                       <div class="form-row"> 
                       <div class="form-group col-md-12">
-                          <select id="inputState" name="exam" [(ngModel)]="examModel" class="form-control">
-                              <option selected [value]="0">Attaining For</option>
+                          <select formControlName="exam" [(ngModel)]="examModel" class="form-control">
+                              <option selected value="0">Attaining For</option>
                               <option [value]="exam.id" *ngFor="let exam of examination">{{exam.type}}</option>
                             </select>
                       </div>  
                     </div>
                     <div class="form-row"> 
                         <div class="form-group col-md-12">
-                            <input type="text" maxlength="2" required="required" ngModel name="seatlimit" value="" class="form-control" placeholder="Seat limit" id="seatlimit">
+                            <input type="text" maxlength="2"  formControlName="seatlimit" value="" class="form-control" placeholder="Seat limit" id="seatlimit">
                         </div>  
                       </div>
                       <div class="form-row"> 
                           <div class="form-group col-md-12">
-                      <button type="submit" class="btn btn-success" [disabled] ="!ConfigForm.form.valid && examModel > 0">
+                      <button class="btn btn-success" [disabled] ="!manageForm.valid">
                           <i class="fa fa-sign-in"></i> Submit</button>
                       </div>
                     </div>    

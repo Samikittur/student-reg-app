@@ -44,7 +44,16 @@ router.get('/getusers', verifyToken, function (req, res) {
                     console.log(err);
                     res.json(err);
                 } else {
-                    res.json(users);
+                    let usersList = [];
+                    users.forEach(itm => {
+                        usersList.push({
+                            email : itm.email,
+                            name : itm.name,
+                            type : itm.type,
+                            _id : itm._id
+                        });
+                    });
+                    res.json(usersList);
                 }
             });
         }
