@@ -35,7 +35,7 @@ app.use(passport.session());
 app.use('/api',api);
 
 app.get('*',(req,res)=>{
-   res.sendfile(path.join(__dirname,'dist/student-reg-app/index.html'))
+    res.sendFile(path.join(__dirname,'dist/student-reg-app/index.html'))
 });
 
 app.listen(port,()=>console.log("server is running PORT: "+port));

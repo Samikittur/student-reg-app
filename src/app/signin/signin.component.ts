@@ -28,9 +28,9 @@ export class SigninComponent implements OnInit {
   constructor(private AuthServices : AuthServices, 
               private Services: Services, 
               private router: Router, 
-              private route: ActivatedRoute,
+              private activatedRoute: ActivatedRoute,
               private socialAuthService: AuthService) {
-  this.AuthServices.userAuth('register');
+  this.AuthServices.userAuth('userdashboard');
   }
 
   ngOnInit() {
@@ -54,7 +54,7 @@ export class SigninComponent implements OnInit {
         if(parseRes.user.type == 'admin'){
           this.router.navigate(['/admindash']);
         }else{
-          this.router.navigate(['/register']);
+          this.router.navigate(['/userdashboard']);
         }
         
         this.errorFlag = false;
@@ -74,6 +74,7 @@ export class SigninComponent implements OnInit {
 
    public socialSignIn(socialPlatform : string) {
     let socialPlatformProvider;
+    const self = this;
     if(socialPlatform == "facebook"){
       socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
     }else if(socialPlatform == "google"){
@@ -84,9 +85,8 @@ export class SigninComponent implements OnInit {
     
     this.socialAuthService.signIn(socialPlatformProvider).then(
       (userData) => {
-        console.log(socialPlatform+" sign in data : " , userData);
-        this.router.navigate(['/register']);
-            
+        console.log(socialPlatform+" Social sign in");
+        self.router.navigate(['/userdashboard'], { relativeTo: this.activatedRoute });  
       }
     );
   }
