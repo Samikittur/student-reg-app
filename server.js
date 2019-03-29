@@ -13,6 +13,7 @@ var app=express();
 
 app.use(cors());
 app.use(express.static(path.join(__dirname,'dist/student-reg-app')));
+app.use('/uploads',express.static('uploads'));
 require('./config/passport')(passport);
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());

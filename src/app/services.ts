@@ -27,6 +27,13 @@ export class Services {
             }));
     }
 
+    uploadProfilePicture(user){
+        return this.http.post(this.APIEndpoint+'uploadPicture',user)
+            .pipe(map(res => {
+                return res;
+            }));
+    }
+
     getAllUser(){
         return this.http.get(this.APIEndpoint+'getusers',this.httpOptions)
             .pipe(map(res => {

@@ -20,6 +20,9 @@ const users = mongoose.Schema({
     type:{
         type: String,
         required: true
+    },
+    profilePicture:{
+        type: String,
     }},
     {collection:"users"});
     

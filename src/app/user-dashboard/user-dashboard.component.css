@@ -33,3 +33,14 @@
 .exam-details span{
     color: black;
 }
+.profile-pic{
+    border-radius: 100% 100%;
+    overflow: hidden;
+}
+#profilePicture{
+    display: none;
+}
+.profile-pic-lbl{
+    float: left;
+    margin-right: 20px;
+}

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
 const mongoose = require('mongoose');
 const usersSchemaModel = require('../models/users-schema');
 const statesSchemaModel = require('../models/states-schema');
@@ -13,6 +14,25 @@ const passport = require('passport');
 require('../config/passport')(passport);
 const LocalStrategy = require('passport-local').Strategy;
 var jwt = require('jsonwebtoken');
+const DIR = './uploads/';
+
+const date = new Date();
+const storage = multer.diskStorage({
+      destination: function (req, file, next) {
+        next(null, DIR);
+      },
+      filename: function (req, file, cb) {
+       // cb(null, new Date().toDateString + file.originalname);
+       cb(null, Date.now()+'-'+file.originalname);
+      }
+    });
+
+const upload = multer({storage:storage}).single('photo');
+/*const upload = multer({
+    storage: storage, fileFilter: (req, file, next) => {
+      next(null, true);
+    }, limits: { fileSize: 15 * 1000000 }
+  }).single('xlsxUpload');*/
 
 mongoose.Promise = global.Promise;
 mongoose.connect(db.database, (err) => {
@@ -33,6 +53,55 @@ router.post('/createToken', function (req, res) {
         res.json({ token: token });
     });
 });
+
+router.post('/uploadPicture',upload,function (req, res, next) {
+    var path = '';
+    //console.log("Inside: " + JSON.stringify(req.file));
+    
+    usersSchemaModel.findOne({
+        _id: req.body.userid
+    }, function (err, user) {
+        if (err) throw err;
+
+        if (!user) {
+            res.status(401).send({ success: false, msg: 'Authentication failed. User not found.' });
+        } else {
+           var usersSchema= new usersSchemaModel();
+           usersSchema = user;
+           usersSchema.profilePicture = 'uploads/' + req.file.filename;
+           usersSchema.save(function (errs, userData) {
+                if (errs) {
+                    console.log(errs);
+                    res.json(errs);
+                } else {
+                    const returnUser = {
+                        id: userData._id,
+                        name: userData.name,
+                        email: userData.email,
+                        type: userData.type,
+                        profilePicture:userData.profilePicture
+                    }
+                    res.json(returnUser);
+                }
+            });
+        }
+        
+    });
+    
+  /* upload(req, res, function (err) {
+       if (err) {
+         // An error occurred when uploading
+         console.log(err);
+         return res.status(422).send("an Error occured")
+       }  
+      // No error occured.
+       path = req.file.path;
+       console.log("Inside: " + JSON.stringify(req.file));
+       return res.send("Upload Completed for "+path); 
+ });*/
+ 
+})
+
 // Get All Users
 router.get('/getusers', verifyToken, function (req, res) {
     jwt.verify(req.token, db.secret, function (err, authData) {
@@ -50,6 +119,7 @@ router.get('/getusers', verifyToken, function (req, res) {
                             email : itm.email,
                             name : itm.name,
                             type : itm.type,
+                            profilePicture : itm.profilePicture,
                             _id : itm._id
                         });
                     });
@@ -408,7 +478,8 @@ router.post('/signin', function (req, res) {
                         id: user._id,
                         name: user.name,
                         email: user.email,
-                        type: user.type
+                        type: user.type,
+                        profilePicture:user.profilePicture
                     }
                     res.json({ success: true, token: token, user: returnUser });
                 } else {
