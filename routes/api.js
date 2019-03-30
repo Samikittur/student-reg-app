@@ -11,6 +11,7 @@ const examRegisterModel = require('../models/regrequests-schema');
 const db = require('../config/db');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+var fs = require('fs');
 require('../config/passport')(passport);
 const LocalStrategy = require('passport-local').Strategy;
 var jwt = require('jsonwebtoken');
@@ -55,9 +56,6 @@ router.post('/createToken', function (req, res) {
 });
 
 router.post('/uploadPicture',upload,function (req, res, next) {
-    var path = '';
-    //console.log("Inside: " + JSON.stringify(req.file));
-    
     usersSchemaModel.findOne({
         _id: req.body.userid
     }, function (err, user) {
@@ -66,6 +64,17 @@ router.post('/uploadPicture',upload,function (req, res, next) {
         if (!user) {
             res.status(401).send({ success: false, msg: 'Authentication failed. User not found.' });
         } else {
+
+            // Check if file is exist in file location and delete old file
+            try { 
+                if (fs.existsSync(user.profilePicture)) {
+                    fs.unlinkSync(user.profilePicture);
+                    console.log('File deleted!');
+                }
+              } catch(err) {
+                console.error(err)
+              }
+
            var usersSchema= new usersSchemaModel();
            usersSchema = user;
            usersSchema.profilePicture = 'uploads/' + req.file.filename;
@@ -81,25 +90,22 @@ router.post('/uploadPicture',upload,function (req, res, next) {
                         type: userData.type,
                         profilePicture:userData.profilePicture
                     }
-                    res.json(returnUser);
+                    upload(req, res, function (err) {
+                        if (err) {
+                          // An error occurred when uploading
+                          console.log(err);
+                          return res.status(422).send("an Error occured")
+                        }  
+                       // No error occured.
+                       res.json(returnUser);
+                     });
+                    
                 }
             });
         }
         
     });
-    
-  /* upload(req, res, function (err) {
-       if (err) {
-         // An error occurred when uploading
-         console.log(err);
-         return res.status(422).send("an Error occured")
-       }  
-      // No error occured.
-       path = req.file.path;
-       console.log("Inside: " + JSON.stringify(req.file));
-       return res.send("Upload Completed for "+path); 
- });*/
- 
+     
 })
 
 // Get All Users
