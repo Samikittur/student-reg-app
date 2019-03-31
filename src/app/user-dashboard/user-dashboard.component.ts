@@ -12,7 +12,7 @@ import { AuthServices } from '../auth.service';
 export class UserDashboardComponent implements OnInit {
   user: any;
   userExamList: any;
-  uploadPic : FormGroup;
+  uploadPicture : FormGroup;
   filesToUpload:File = null;
   loading:boolean;
   constructor(private AuthServices: AuthServices, 
@@ -29,7 +29,7 @@ export class UserDashboardComponent implements OnInit {
     this.formValidation();
   }
   formValidation(){
-    this.uploadPic = this.fb.group({
+    this.uploadPicture = this.fb.group({
       profilePicture:[null,Validators.required]
     });
   }
