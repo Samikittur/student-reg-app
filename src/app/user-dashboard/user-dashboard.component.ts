@@ -14,6 +14,7 @@ export class UserDashboardComponent implements OnInit {
   userExamList: any;
   uploadPic : FormGroup;
   filesToUpload:File = null;
+  loading:boolean;
   constructor(private AuthServices: AuthServices, 
     public Services: Services, 
     private router: Router, 
@@ -60,6 +61,7 @@ export class UserDashboardComponent implements OnInit {
   }
 
 uploadProfilePicture() {
+  this.loading = true;
   const formData: any = new FormData();
   const getUserId = localStorage.getItem('userData');
   this.user = JSON.parse(getUserId);
@@ -70,6 +72,7 @@ uploadProfilePicture() {
     localStorage.removeItem('userData');
     localStorage.setItem('userData', JSON.stringify(user));
     this.getUserDetails();
+    this.loading = false;
   });
  
 }
