@@ -83,13 +83,7 @@ router.post('/uploadPicture',upload,function (req, res, next) {
                     console.log(errs);
                     res.json(errs);
                 } else {
-                    const returnUser = {
-                        id: userData._id,
-                        name: userData.name,
-                        email: userData.email,
-                        type: userData.type,
-                        profilePicture:userData.profilePicture
-                    }
+                   // var returnUser =  userData(userData);
                     upload(req, res, function (err) {
                         if (err) {
                           // An error occurred when uploading
@@ -97,7 +91,7 @@ router.post('/uploadPicture',upload,function (req, res, next) {
                           return res.status(422).send("an Error occured")
                         }  
                        // No error occured.
-                       res.json(returnUser);
+                       res.json(userData(userData));
                      });
                     
                 }
@@ -106,7 +100,22 @@ router.post('/uploadPicture',upload,function (req, res, next) {
         
     });
      
-})
+});
+
+router.get('/getUser/:id',function (req, res, next) {
+    
+    usersSchemaModel.findOne({
+        _id:  req.params.id
+    }, function (err, user) {
+         if (err) throw err;
+         if (!user) {
+            res.status(401).send({ success: false, msg: 'Authentication failed. User not found.' });
+        } else {
+            res.json(userData(user));
+        }
+    });
+
+});
 
 // Get All Users
 router.get('/getusers', verifyToken, function (req, res) {
@@ -121,13 +130,7 @@ router.get('/getusers', verifyToken, function (req, res) {
                 } else {
                     let usersList = [];
                     users.forEach(itm => {
-                        usersList.push({
-                            email : itm.email,
-                            name : itm.name,
-                            type : itm.type,
-                            profilePicture : itm.profilePicture,
-                            _id : itm._id
-                        });
+                        usersList.push(userData(itm));
                     });
                     res.json(usersList);
                 }
@@ -480,14 +483,8 @@ router.post('/signin', function (req, res) {
                     var token = jwt.sign(user.toJSON(), db.secret);
                    // var token = jwt.sign(user.toJSON(), db.secret,{expiresIn: '1h' }); with exipiry
                     // return the information including token as JSON
-                    const returnUser = {
-                        id: user._id,
-                        name: user.name,
-                        email: user.email,
-                        type: user.type,
-                        profilePicture:user.profilePicture
-                    }
-                    res.json({ success: true, token: token, user: returnUser });
+                    user.signIn = true;
+                    res.json({ success: true, token: token, user: userData(user) });
                 } else {
                     res.status(401).send({ success: false, msg: 'Authentication failed. Wrong password.' });
                 }
@@ -507,6 +504,21 @@ function verifyToken(req, res, next) {
     } else {
         res.sendStatus(403);
     }
+}
+
+function userData(data){
+    var userData = {
+        email : data.email,
+        name : data.name,
+        type : data.type,
+        profilePicture : data.profilePicture,
+        _id : data._id
+    }
+    if(data.signIn){
+        delete userData._id;
+        userData.id = data._id;
+    }
+    return userData;
 }
 
 function todaysDate() {

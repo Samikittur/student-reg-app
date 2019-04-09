@@ -41,7 +41,14 @@ export class Services {
                 return res;
             }));
     }
-
+ 
+    getUser(id){
+        return this.http.get(this.APIEndpoint+'getUser/'+id,this.httpOptions)
+            .pipe(map(res => {
+                return res;
+            }));
+    }
+    
     getStates(){
         return this.http.get(this.APIEndpoint+'states',this.httpOptions)
             .pipe(map(res => {

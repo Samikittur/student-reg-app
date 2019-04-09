@@ -24,18 +24,22 @@ export class UserDashboardComponent implements OnInit {
     this.AuthServices.userAuth('userdashboard');
   }
   ngOnInit() {
-    this.getUserDetails();
     this.getExamRequests();
     this.formValidation();
+    this.getUser();
   }
   formValidation(){
     this.uploadPicture = this.fb.group({
       profilePicture:[null,Validators.required]
     });
   }
-  getUserDetails() {
+ 
+  getUser(){
     const getUserId = localStorage.getItem('userData');
     this.user = JSON.parse(getUserId);
+    this.Services.getUser(this.user.id).subscribe(user=>{
+      this.user = user;
+    });
   }
   getExamRequests() {
     const getUserId = localStorage.getItem('userData');
@@ -62,6 +66,7 @@ export class UserDashboardComponent implements OnInit {
 
 uploadProfilePicture() {
   this.loading = true;
+  let self = this;
   const formData: any = new FormData();
   const getUserId = localStorage.getItem('userData');
   this.user = JSON.parse(getUserId);
@@ -71,10 +76,16 @@ uploadProfilePicture() {
   this.Services.uploadProfilePicture(formData).subscribe(user=>{
     localStorage.removeItem('userData');
     localStorage.setItem('userData', JSON.stringify(user));
-    this.getUserDetails();
     this.loading = false;
+    self.resetForm();
+    self.getUser();
   });
  
+}
+resetForm(){
+  this.uploadPicture = this.fb.group({
+    profilePicture:[null,Validators.required]
+  });
 }
 
 }
