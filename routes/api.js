@@ -78,7 +78,7 @@ router.post('/uploadPicture',upload,function (req, res, next) {
            var usersSchema= new usersSchemaModel();
            usersSchema = user;
            usersSchema.profilePicture = 'uploads/' + req.file.filename;
-           usersSchema.save(function (errs, userData) {
+           usersSchema.save(function (errs, data) {
                 if (errs) {
                     console.log(errs);
                     res.json(errs);
@@ -91,7 +91,14 @@ router.post('/uploadPicture',upload,function (req, res, next) {
                           return res.status(422).send("an Error occured")
                         }  
                        // No error occured.
-                       res.json(userData(userData));
+                       var userData = {
+                            email : data.email,
+                            name : data.name,
+                            type : data.type,
+                            profilePicture : data.profilePicture,
+                            _id : data._id
+                         }
+                       res.json(userData);
                      });
                     
                 }
@@ -483,7 +490,6 @@ router.post('/signin', function (req, res) {
                     var token = jwt.sign(user.toJSON(), db.secret);
                    // var token = jwt.sign(user.toJSON(), db.secret,{expiresIn: '1h' }); with exipiry
                     // return the information including token as JSON
-                    user.signIn = true;
                     res.json({ success: true, token: token, user: userData(user) });
                 } else {
                     res.status(401).send({ success: false, msg: 'Authentication failed. Wrong password.' });
@@ -513,10 +519,6 @@ function userData(data){
         type : data.type,
         profilePicture : data.profilePicture,
         _id : data._id
-    }
-    if(data.signIn){
-        delete userData._id;
-        userData.id = data._id;
     }
     return userData;
 }

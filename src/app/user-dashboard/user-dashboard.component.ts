@@ -37,14 +37,14 @@ export class UserDashboardComponent implements OnInit {
   getUser(){
     const getUserId = localStorage.getItem('userData');
     this.user = JSON.parse(getUserId);
-    this.Services.getUser(this.user.id).subscribe(user=>{
+    this.Services.getUser(this.user._id).subscribe(user=>{
       this.user = user;
     });
   }
   getExamRequests() {
     const getUserId = localStorage.getItem('userData');
     this.user = JSON.parse(getUserId);
-    this.Services.getExamRequests(this.user.id).subscribe(examList => {
+    this.Services.getExamRequests(this.user._id).subscribe(examList => {
       this.userExamList = examList;
     });
   }
@@ -71,7 +71,7 @@ uploadProfilePicture() {
   const getUserId = localStorage.getItem('userData');
   this.user = JSON.parse(getUserId);
   formData.append('photo',this.filesToUpload,this.filesToUpload.name);
-  formData.append('userid',this.user.id);
+  formData.append('userid',this.user._id);
  
   this.Services.uploadProfilePicture(formData).subscribe(user=>{
     localStorage.removeItem('userData');
@@ -79,6 +79,8 @@ uploadProfilePicture() {
     this.loading = false;
     self.resetForm();
     self.getUser();
+  },error => {
+    self.loading = false;
   });
  
 }
