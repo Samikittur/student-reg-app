@@ -56,7 +56,6 @@ export class UserDashboardComponent implements OnInit {
       file:this.uploadPic
     };
     /*this.Services.uploadProfilePicture(userData).subscribe(user=>{
-      console.log(JSON.stringify(user));
     });
 }*/
 
@@ -81,6 +80,7 @@ uploadProfilePicture() {
     self.getUser();
   },error => {
     self.loading = false;
+    self.resetForm();
   });
  
 }
